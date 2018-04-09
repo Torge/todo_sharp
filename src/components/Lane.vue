@@ -6,23 +6,23 @@
 </template>
 
 <script>
-  import Ticket from '@/components/Ticket'
-  export default {
-    name: 'lane',
-    components: {
-      Ticket
+import Ticket from '@/components/Ticket'
+export default {
+  name: 'lane',
+  components: {
+    Ticket
+  },
+  props: {
+    title: {
+      type: String,
+      required: true
     },
-    props: {
-      title: {
-        type: String,
-        required: true
-      },
-      tickets: {
-        type: Array,
-        default: () => []
-      }
+    tickets: {
+      type: Array,
+      default: () => []
     }
   }
+}
 </script>
 
 <style scoped>

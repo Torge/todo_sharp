@@ -3,15 +3,15 @@
 </template>
 
 <script>
-  export default {
-    name: "ticket",
-    props: {
-      ticket: {
-        type: Object,
-        required: true
-      }
+export default {
+  name: 'ticket',
+  props: {
+    ticket: {
+      type: Object,
+      required: true
     }
   }
+}
 </script>
 
 <style scoped>
