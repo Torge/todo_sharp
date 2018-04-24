@@ -1,0 +1,21 @@
+{
+  "connection": "default",
+  "collectionName": "ticket",
+  "info": {
+    "name": "ticket",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "multiple": false,
+      "type": "string"
+    },
+    "project": {
+      "model": "project",
+      "via": "ticket"
+    }
+  }
+}
