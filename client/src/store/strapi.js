@@ -6,7 +6,7 @@ const vueAuth = new VueAuthenticate(axios, {
   providers: {
     google: {
       clientId: '1027715718368-niq4gvn9hie8rr079ouv6p0osumdm4vb.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8080/auth/callback',
+      redirectUri: 'http://localhost:8080/login',
       url: '/auth/google/callback'
     }
   }
@@ -25,8 +25,16 @@ export default {
 
   },
   actions: {
-    login () {
-      return vueAuth.authenticate('google').then(console.log)
+    async login ({dispatch}, accessToken) {
+      let loginRes = await axios({
+        method: 'get',
+        url: `${process.env.VUE_APP_API_URL}/auth/google/callback`,
+        params: {'access_token': accessToken}
+      })
+      console.log(loginRes)
+    },
+    authenticate (context, accessToken) {
+      console.log(`${process.env.VUE_APP_API_URL}/connect/google`)
     }
   }
 }
