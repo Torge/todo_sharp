@@ -14,7 +14,9 @@ export default {
   },
   created () {
     const accessToken = this.$route.query.access_token
-    this.$store.dispatch('login', accessToken).then(() => this.$router.push({name: 'landing'}))
+    if (accessToken) {
+      this.$store.dispatch('auth/authenticate', accessToken).then(() => this.$router.push({name: 'landing'}))
+    }
   },
   methods: {
     test: console.log

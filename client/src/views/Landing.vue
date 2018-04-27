@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  name: 'Landing'
+  name: 'Landing',
+  created () {
+    this.$store.dispatch('project/find')
+  }
 }
 </script>
 
