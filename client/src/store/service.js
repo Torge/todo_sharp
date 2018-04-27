@@ -350,6 +350,45 @@ export default function createServiceModule (servicePath) {
             commit('unsetRemovePending')
             return Promise.reject(error)
           }
+        },
+        addOrUpdateList ({ state, commit }, response) {
+          const list = response.data || response
+          const isPaginated = response.hasOwnProperty('total')
+          const toAdd = []
+          const toUpdate = []
+          const toRemove = []
+          const { idField, autoRemove } = state
+    
+          list.forEach(item => {
+            let id = item[idField]
+            let existingItem = state.keyedById[id]
+    
+            checkId(id, item)
+    
+            existingItem ? toUpdate.push(item) : toAdd.push(item)
+          })
+    
+          if (!isPaginated && autoRemove) {
+            // Find IDs from the state which are not in the list
+            state.ids.forEach(id => {
+              if (id !== state.currentId && !list.some(item => item[idField] === id)) {
+                toRemove.push(state.keyedById[id])
+              }
+            })
+            commit('removeItems', toRemove) // commit removal
+          }
+    
+          commit('addItems', toAdd)
+          commit('updateItems', toUpdate)
+        },
+        addOrUpdate ({ state, commit }, item) {
+          const { idField } = state
+          let id = item[idField]
+          let existingItem = state.keyedById[id]
+    
+          checkId(id, item)
+    
+          existingItem ? commit('updateItem', item) : commit('addItem', item)
         }
       }
     })
@@ -372,4 +411,9 @@ function updateItem (state, item) {
   const { idField } = state
   let id = item[idField]
   state.keyedById[id] = item
+}
+function checkId (id, item) {
+  if (id === undefined) {
+    throw new Error('No id found for item. Do you need to customize the `idField`?', item)
+  }
 }
