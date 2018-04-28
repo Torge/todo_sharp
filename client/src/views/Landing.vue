@@ -6,7 +6,7 @@
 export default {
   name: 'Landing',
   created () {
-    this.$store.dispatch('project/find')
+    this.$store.dispatch('project/find').then(console.log)
   }
 }
 </script>

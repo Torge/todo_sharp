@@ -358,26 +358,29 @@ export default function createServiceModule (servicePath) {
           const toUpdate = []
           const toRemove = []
           const { idField, autoRemove } = state
-    
+
           list.forEach(item => {
             let id = item[idField]
             let existingItem = state.keyedById[id]
-    
+
             checkId(id, item)
-    
+
             existingItem ? toUpdate.push(item) : toAdd.push(item)
           })
-    
+
           if (!isPaginated && autoRemove) {
             // Find IDs from the state which are not in the list
             state.ids.forEach(id => {
-              if (id !== state.currentId && !list.some(item => item[idField] === id)) {
+              if (
+                id !== state.currentId &&
+                !list.some(item => item[idField] === id)
+              ) {
                 toRemove.push(state.keyedById[id])
               }
             })
             commit('removeItems', toRemove) // commit removal
           }
-    
+
           commit('addItems', toAdd)
           commit('updateItems', toUpdate)
         },
@@ -385,9 +388,9 @@ export default function createServiceModule (servicePath) {
           const { idField } = state
           let id = item[idField]
           let existingItem = state.keyedById[id]
-    
+
           checkId(id, item)
-    
+
           existingItem ? commit('updateItem', item) : commit('addItem', item)
         }
       }
@@ -414,6 +417,9 @@ function updateItem (state, item) {
 }
 function checkId (id, item) {
   if (id === undefined) {
-    throw new Error('No id found for item. Do you need to customize the `idField`?', item)
+    throw new Error(
+      'No id found for item. Do you need to customize the `idField`?',
+      item
+    )
   }
 }
