@@ -13,7 +13,7 @@ export default {
     }
   },
   created () {
-    const accessToken = this.$route.query.access_token
+    const accessToken = this.$route.query.access_token || this.$route.query.code
     if (accessToken) {
       this.$store.dispatch('auth/authenticate', accessToken).then(() => this.$router.push({name: 'landing'}))
     }

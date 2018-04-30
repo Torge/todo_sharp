@@ -3,6 +3,14 @@ from flask_pymongo import PyMongo
 import json
 from bson import ObjectId
 from datetime import datetime
+from oauth2client.client import OAuth2WebServerFlow
+import httplib2
+
+flow = OAuth2WebServerFlow(client_id='1027715718368-niq4gvn9hie8rr079ouv6p0osumdm4vb.apps.googleusercontent.com',
+                           client_secret='clF2yjEX6sPxrJB3VNDiLrb2',
+                           scope='email',
+                           redirect_uri='http://localhost:8080/login')
+
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -113,6 +121,19 @@ def user_delete(id):
   mongo.db['users-permissions_user'].delete_one({'_id': ObjectId(id)})
   return "ok"
 
+@app.route('/connect/google/')
+def connetGoogle():
+  return redirect(flow.step1_get_authorize_url())
+@app.route('/auth/google/callback')
+def auth():
+  http = httplib2.Http()
+  code = request.args.get('access_token')
+  credentials = flow.step2_exchange(code)
+  http = credentials.authorize(http)
+  (resp, content) = http.request('https://www.googleapis.com/oauth2/v1/userinfo?alt=json')
+  print(json.loads(content))
+  jwt = credentials.get_access_token().access_token
+  return 'ok'  
 
 if __name__ == "__main__":
     app.run(debug=True)
