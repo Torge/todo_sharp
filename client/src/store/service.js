@@ -12,22 +12,7 @@ export default function createServiceModule (servicePath) {
         keyedById: {},
         currentId: null,
         copy: null,
-        idField: '_id',
-        servicePath,
-        autoRemove: true,
-        pagination: {},
-
-        isFindPending: false,
-        isGetPending: false,
-        isCreatePending: false,
-        isPatchPending: false,
-        isRemovePending: false,
-
-        errorOnFind: null,
-        errorOnGet: null,
-        errorOnCreate: null,
-        errorOnPatch: null,
-        errorOnRemove: null
+        pagination: {}
       },
       getters: {
         list (state) {
@@ -63,8 +48,7 @@ export default function createServiceModule (servicePath) {
         },
 
         removeItem (state, item) {
-          const { idField } = state
-          const idToBeRemoved = isObject(item) ? item[idField] : item
+          const idToBeRemoved = isObject(item) ? item._id : item
           const keyedById = {}
           const { currentId } = state
 
@@ -86,8 +70,6 @@ export default function createServiceModule (servicePath) {
         },
 
         removeItems (state, items) {
-          const { idField } = state
-
           if (!Array.isArray(items)) {
             throw new Error(
               'You must provide an array to the `removeItems` mutation.'
@@ -101,7 +83,7 @@ export default function createServiceModule (servicePath) {
 
           // If the array contains objects, create an array of ids. Assume all are the same.
           if (containsObjects) {
-            idsToRemove = items.map(item => item[idField])
+            idsToRemove = items.map(item => item._id)
           }
 
           // Make a hash map of the idsToRemove, so we don't have to iterate inside a loop
@@ -150,11 +132,10 @@ export default function createServiceModule (servicePath) {
         },
 
         setCurrent (state, itemOrId) {
-          const { idField } = state
           let id
           let item
           if (isObject(itemOrId)) {
-            id = itemOrId[idField]
+            id = itemOrId._id
             item = itemOrId
           } else {
             id = itemOrId
@@ -169,112 +150,26 @@ export default function createServiceModule (servicePath) {
           state.copy = null
         },
 
-        // Deep assigns current to copy
         rejectCopy (state) {
           let current = state.keyedById[state.currentId]
           _merge(state.copy, current)
         },
 
-        // Deep assigns copy to current
         commitCopy (state) {
           let current = state.keyedById[state.currentId]
           _merge(current, state.copy)
-        },
-
-        // Stores pagination data on state.pagination based on the query identifier (qid)
-        // The qid must be manually assigned to `params.qid`
-        updatePaginationForQuery (state, { qid, response, query }) {
-          const { data, limit, skip, total } = response
-          const { idField } = state
-          const ids = data.map(item => {
-            return item[idField]
-          })
-          state.pagination = {
-            ...state.pagination,
-            [qid]: { limit, skip, total, ids, query }
-          }
-        },
-
-        setFindPending (state) {
-          state.isFindPending = true
-        },
-        unsetFindPending (state) {
-          state.isFindPending = false
-        },
-        setGetPending (state) {
-          state.isGetPending = true
-        },
-        unsetGetPending (state) {
-          state.isGetPending = false
-        },
-        setCreatePending (state) {
-          state.isCreatePending = true
-        },
-        unsetCreatePending (state) {
-          state.isCreatePending = false
-        },
-        setPatchPending (state) {
-          state.isPatchPending = true
-        },
-        unsetPatchPending (state) {
-          state.isPatchPending = false
-        },
-        setRemovePending (state) {
-          state.isRemovePending = true
-        },
-        unsetRemovePending (state) {
-          state.isRemovePending = false
-        },
-
-        setFindError (state, payload) {
-          state.errorOnFind = Object.assign({}, payload)
-        },
-        clearFindError (state) {
-          state.errorOnFind = null
-        },
-        setGetError (state, payload) {
-          state.errorOnGet = Object.assign({}, payload)
-        },
-        clearGetError (state) {
-          state.errorOnGet = null
-        },
-        setCreateError (state, payload) {
-          state.errorOnCreate = Object.assign({}, payload)
-        },
-        clearCreateError (state) {
-          state.errorOnCreate = null
-        },
-        setPatchError (state, payload) {
-          state.errorOnPatch = Object.assign({}, payload)
-        },
-        clearPatchError (state) {
-          state.errorOnPatch = null
-        },
-        setRemoveError (state, payload) {
-          state.errorOnRemove = Object.assign({}, payload)
-        },
-        clearRemoveError (state) {
-          state.errorOnRemove = null
         }
       },
       actions: {
         async find ({ commit, dispatch, getters }, params = {}) {
-          commit('setFindPending')
           try {
             const findResponse = await api.get(servicePath, { params })
             dispatch('addOrUpdateList', findResponse.data)
-            commit('unsetFindPending')
             return findResponse.data
           } catch (error) {
-            commit('setFindError', error)
-            commit('unsetFindPending')
             return Promise.reject(error)
           }
         },
-
-        // Two query syntaxes are supported, since actions only receive one argument.
-        //   1. Just pass the id: `get(1)`
-        //   2. Pass arguments as an array: `get([null, params])`
         async get ({ commit, dispatch }, args) {
           let id
           let params
@@ -286,8 +181,6 @@ export default function createServiceModule (servicePath) {
             id = args
           }
 
-          commit('setGetPending')
-
           try {
             const getResponse = await api.get(servicePath + '/' + id, {
               params
@@ -295,32 +188,24 @@ export default function createServiceModule (servicePath) {
             const item = getResponse.data
             dispatch('addOrUpdate', item)
             commit('setCurrent', item)
-            commit('unsetGetPending')
             return item
           } catch (error) {
-            commit('setGetError', error)
-            commit('unsetGetPending')
             return Promise.reject(error)
           }
         },
 
         async create ({ commit, dispatch }, data) {
-          commit('setCreatePending')
           try {
             const createResponse = await api.post(servicePath, { data })
             const item = createResponse.data
             dispatch('addOrUpdate', item)
             commit('setCurrent', item)
-            commit('unsetCreatePending')
             return item
           } catch (error) {
-            commit('setCreateError', error)
-            commit('unsetCreatePending')
             return Promise.reject(error)
           }
         },
         async patch ({ commit, dispatch }, [id, data, params]) {
-          commit('setPatchPending')
           try {
             const patchResponse = await api.put(servicePath + '/' + id, {
               data,
@@ -328,65 +213,50 @@ export default function createServiceModule (servicePath) {
             })
             const item = patchResponse.data
             dispatch('addOrUpdate', item)
-            commit('unsetPatchPending')
             return item
           } catch (error) {
-            commit('setPatchError', error)
-            commit('unsetPatchPending')
             return Promise.reject(error)
           }
         },
 
         async remove ({ commit, dispatch }, id) {
-          commit('setRemovePending')
           try {
             const removeResponse = await api.delete(servicePath + '/' + id)
             const item = removeResponse.data
             commit('removeItem', id)
-            commit('unsetRemovePending')
             return item
           } catch (error) {
-            commit('setRemoveError', error)
-            commit('unsetRemovePending')
             return Promise.reject(error)
           }
         },
         addOrUpdateList ({ state, commit }, response) {
           const list = response.data || response
-          const isPaginated = response.hasOwnProperty('total')
           const toAdd = []
           const toUpdate = []
           const toRemove = []
-          const { idField, autoRemove } = state
 
           list.forEach(item => {
-            let id = item[idField]
+            let id = item._id
             let existingItem = state.keyedById[id]
 
             checkId(id, item)
 
             existingItem ? toUpdate.push(item) : toAdd.push(item)
           })
-
-          if (!isPaginated && autoRemove) {
-            // Find IDs from the state which are not in the list
-            state.ids.forEach(id => {
-              if (
-                id !== state.currentId &&
-                !list.some(item => item[idField] === id)
-              ) {
-                toRemove.push(state.keyedById[id])
-              }
-            })
-            commit('removeItems', toRemove) // commit removal
-          }
+          state.ids.forEach(id => {
+            if (
+              id !== state.currentId &&
+              !list.some(item => item._id === id)
+            ) {
+              toRemove.push(state.keyedById[id])
+            }
+          })
 
           commit('addItems', toAdd)
           commit('updateItems', toUpdate)
         },
         addOrUpdate ({ state, commit }, item) {
-          const { idField } = state
-          let id = item[idField]
+          let id = item._id
           let existingItem = state.keyedById[id]
 
           checkId(id, item)
