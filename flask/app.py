@@ -12,6 +12,10 @@ flow = OAuth2WebServerFlow(client_id='1027715718368-niq4gvn9hie8rr079ouv6p0osumd
                            scope='email',
                            redirect_uri='http://localhost:8080/login')
 
+app = Flask(__name__)
+app.config["MONGO_DBNAME"] = "strapi"
+CORS(app)
+mongo = PyMongo(app, config_prefix='MONGO')
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -21,10 +25,6 @@ class JSONEncoder(json.JSONEncoder):
           return o.isoformat()
         return json.JSONEncoder.default(self, o)
 
-app = Flask(__name__)
-app.config["MONGO_DBNAME"] = "strapi"
-CORS(app)
-mongo = PyMongo(app, config_prefix='MONGO')
 
 @app.route('/project', methods=['POST'])
 def project_create():
