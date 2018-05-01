@@ -144,6 +144,3 @@ def auth():
   user = mongo.db['users-permissions_user'].find_one({'email': user['email']})
   jwt = credentials.get_access_token().access_token
   return JSONEncoder().encode({'user': user, 'jwt': jwt})  
-
-if __name__ == "__main__":
-    app.run(debug=True)
