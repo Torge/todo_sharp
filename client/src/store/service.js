@@ -230,11 +230,11 @@ export default function createServiceModule (servicePath) {
           }
         },
         addOrUpdateList ({ state, commit }, response) {
-          const list = response.data || response
+          const list = response
           const toAdd = []
           const toUpdate = []
           const toRemove = []
-
+          console.log(list)
           list.forEach(item => {
             let id = item._id
             let existingItem = state.keyedById[id]
@@ -251,7 +251,8 @@ export default function createServiceModule (servicePath) {
               toRemove.push(state.keyedById[id])
             }
           })
-
+          console.log(toAdd)
+          commit('removeItems', toRemove)
           commit('addItems', toAdd)
           commit('updateItems', toUpdate)
         },
@@ -268,8 +269,7 @@ export default function createServiceModule (servicePath) {
   }
 }
 function addItem (state, item) {
-  const { idField } = state
-  let id = item[idField]
+  let id = item._id
 
   if (!state.ids.includes(id)) {
     state.ids.push(id)
@@ -281,8 +281,7 @@ function addItem (state, item) {
   }
 }
 function updateItem (state, item) {
-  const { idField } = state
-  let id = item[idField]
+  let id = item._id
   state.keyedById[id] = item
 }
 function checkId (id, item) {
