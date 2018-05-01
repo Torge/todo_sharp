@@ -1,12 +1,18 @@
 <template>
-  <p>Landing</p>
+  <section>
+    <h1>Landing</h1>
+    <h2>Projects: </h2>
+    <p v-for="project of projects" :key="project._id">{{ project }}</p>
+  </section>
 </template>
 
 <script>
 export default {
   name: 'Landing',
-  created () {
-    this.$store.dispatch('project/find').then(console.log)
+  computed: {
+    projects () {
+      return this.$store.getters['project/list']
+    }
   }
 }
 </script>
