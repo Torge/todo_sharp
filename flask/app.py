@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, url_for, redirect, request
 from flask_pymongo import PyMongo
+from flask_cors import CORS
 import json
 from bson import ObjectId
 from datetime import datetime
@@ -22,6 +23,7 @@ class JSONEncoder(json.JSONEncoder):
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = "strapi"
+CORS(app)
 mongo = PyMongo(app, config_prefix='MONGO')
 
 @app.route('/project', methods=['POST'])
@@ -131,9 +133,17 @@ def auth():
   credentials = flow.step2_exchange(code)
   http = credentials.authorize(http)
   (resp, content) = http.request('https://www.googleapis.com/oauth2/v1/userinfo?alt=json')
-  print(json.loads(content))
+  googleUser = json.loads(content)
+  user = {
+    'email': googleUser['email'],
+    'username': googleUser['name'],
+    'provider': 'google'
+  }
+  print(googleUser)
+  mongo.db['users-permissions_user'].update_one({'email': user['email']}, {'$set': user}, upsert = True)
+  user = mongo.db['users-permissions_user'].find_one({'email': user['email']})
   jwt = credentials.get_access_token().access_token
-  return 'ok'  
+  return JSONEncoder().encode({'user': user, 'jwt': jwt})  
 
 if __name__ == "__main__":
     app.run(debug=True)
