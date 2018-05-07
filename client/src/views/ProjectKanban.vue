@@ -2,7 +2,6 @@
   <b-card>
     <h2>Projekt: {{ project.name }}</h2>
     <b-btn class="float-right" @click="addTicket" >Ticket anlegen</b-btn>
-    <pre>{{ project.ticket }}</pre>
     <div id="board">
       <board/>
     </div>
