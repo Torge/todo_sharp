@@ -1,13 +1,18 @@
 <template>
-  <b-table
-    :items="projects"
-    class="mt-3"
-    striped
-    outlined
-    responsive
-    hover
-    @row-clicked="navigate"
-  />
+  <div>
+    <b-card class="mt-3">
+      Projekte
+      <b-btn class="float-right" variant="primary">Projekt hinzufügen</b-btn>
+    </b-card>
+    <b-table
+        :items="projects"
+        striped
+        outlined
+        responsive
+        hover
+        @row-clicked="navigate"
+      />
+  </div>
 </template>
 
 <script>

@@ -11,11 +11,6 @@ export default {
   name: 'App',
   components: {
     Board
-  },
-  computed: {
-    project () {
-      return this.$store.getters['project/current']
-    }
   }
 }
 </script>
