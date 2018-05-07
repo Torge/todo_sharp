@@ -6,7 +6,6 @@ import LayoutDefault from '@/layout/LayoutDefault'
 import LayoutLogin from '@/layout/LayoutLogin'
 
 import Login from '@/views/Login'
-import Landing from '@/views/Landing'
 
 import ProjectKanban from '@/views/ProjectKanban'
 import ProjectList from '@/views/ProjectList'
@@ -31,12 +30,7 @@ export default new Router({
       children: [
         {
           path: '',
-          name: 'landing',
-          component: Landing,
-          async beforeEnter (to, form, next) {
-            await store.dispatch('project/find')
-            next()
-          }
+          redirect: '/project/list'
         },
         {
           path: '/project/list',

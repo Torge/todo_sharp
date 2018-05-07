@@ -22,28 +22,13 @@ export default {
   components: {
     Lane
   },
-  data () {
-    return {
-      tickets: [
-        {
-          id: '3',
-          status: '2',
-          title: 'Powerpoint erstellen'
-        },
-        {
-          id: '1',
-          status: '0',
-          title: 'Bootstrap einbinden'
-        },
-        {
-          id: '2',
-          status: '1',
-          title: 'Seite schick machen'
-        }
-      ]
-    }
-  },
   computed: {
+    project () {
+      return this.$store.getters['project/current']
+    },
+    tickets () {
+      return this.project.ticket
+    },
     todoTickets () {
       return this.tickets.filter(ticket => ticket.status === '0')
     },
