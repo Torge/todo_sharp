@@ -196,7 +196,7 @@ export default function createServiceModule (servicePath) {
 
         async create ({ commit, dispatch }, data) {
           try {
-            const createResponse = await api.post(servicePath, { data })
+            const createResponse = await api.post(servicePath, data)
             const item = createResponse.data
             dispatch('addOrUpdate', item)
             commit('setCurrent', item)

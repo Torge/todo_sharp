@@ -25,7 +25,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <b-container>
+    <b-container class="mt-3">
       <router-view/>
     </b-container>
   </div>

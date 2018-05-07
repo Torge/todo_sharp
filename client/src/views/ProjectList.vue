@@ -2,16 +2,16 @@
   <div>
     <b-card class="mt-3">
       Projekte
-      <b-btn class="float-right" variant="primary">Projekt hinzufügen</b-btn>
+      <b-btn class="float-right" variant="primary" @click="addProject">Projekt hinzufügen</b-btn>
     </b-card>
     <b-table
-        :items="projects"
-        striped
-        outlined
-        responsive
-        hover
-        @row-clicked="navigate"
-      />
+      :items="projects"
+      striped
+      outlined
+      responsive
+      hover
+      @row-clicked="navigate"
+    />
   </div>
 </template>
 
@@ -26,6 +26,9 @@ export default {
   methods: {
     navigate (project) {
       this.$router.push({name: 'project-kanban', params: {projectId: project._id}})
+    },
+    addProject () {
+      this.$router.push({name: 'project-create'})
     }
   }
 }

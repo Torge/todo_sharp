@@ -42,6 +42,11 @@ export default new Router({
           }
         },
         {
+          path: '/project/create',
+          name: 'project-create',
+          component: ProjectEdit
+        },
+        {
           path: '/project/:projectId',
           redirect: '/project/:projectId/kanban'
         },
