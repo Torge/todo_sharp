@@ -234,7 +234,7 @@ export default function createServiceModule (servicePath) {
           const toAdd = []
           const toUpdate = []
           const toRemove = []
-          console.log(list)
+
           list.forEach(item => {
             let id = item._id
             let existingItem = state.keyedById[id]
@@ -251,7 +251,7 @@ export default function createServiceModule (servicePath) {
               toRemove.push(state.keyedById[id])
             }
           })
-          console.log(toAdd)
+
           commit('removeItems', toRemove)
           commit('addItems', toAdd)
           commit('updateItems', toUpdate)

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store/'
+
 import LayoutDefault from '@/layout/LayoutDefault'
 import LayoutLogin from '@/layout/LayoutLogin'
 
@@ -30,52 +32,97 @@ export default new Router({
         {
           path: '',
           name: 'landing',
-          component: Landing
+          component: Landing,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('project/find')
+            next()
+          }
         },
         {
           path: '/project/list',
           name: 'project-list',
-          component: ProjectList
+          component: ProjectList,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('project/find')
+            next()
+          }
+        },
+        {
+          path: '/project/:projectId',
+          redirect: '/project/:projectId/kanban'
         },
         {
           path: '/project/:projectId/kanban',
           name: 'project-kanban',
-          component: ProjectKanban
+          component: ProjectKanban,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('project/get', to.params.projectId)
+            await store.dispatch('ticket/find', {projectId: to.params.projectId})
+            next()
+          }
         },
         {
           path: '/project/:projectId/detail',
           name: 'project-detail',
-          component: ProjectDetail
+          component: ProjectDetail,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('project/get', to.params.projectId)
+            next()
+          }
         },
         {
           path: '/project/:projectId/edit',
           name: 'project-edit',
-          component: ProjectEdit
+          component: ProjectEdit,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('project/get', to.params.projectId)
+            next()
+          }
         },
         {
           path: '/user/list',
           name: 'user-list',
-          component: UserList
+          component: UserList,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('user/find')
+            next()
+          }
         },
         {
           path: '/user/:userId/detail',
           name: 'user-detail',
-          component: UserDetail
+          component: UserDetail,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('user/get', to.params.userId)
+            next()
+          }
         },
         {
           path: '/user/:userId/edit',
           name: 'user-edit',
-          component: UserEdit
+          component: UserEdit,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('user/get', to.params.userId)
+            next()
+          }
         },
         {
           path: '/ticket/:ticketId/detail',
           name: 'ticket-detail',
-          component: TicketDetail
+          component: TicketDetail,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('ticket/get', to.params.ticketId)
+            next()
+          }
         },
         {
           path: '/ticket/:ticketId/edit',
           name: 'ticket-edit',
-          component: TicketEdit
+          component: TicketEdit,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('ticket/get', to.params.ticketId)
+            next()
+          }
         }
       ]
     },

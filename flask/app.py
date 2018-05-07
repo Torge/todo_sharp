@@ -143,4 +143,4 @@ def auth():
   mongo.db['users-permissions_user'].update_one({'email': user['email']}, {'$set': user}, upsert = True)
   user = mongo.db['users-permissions_user'].find_one({'email': user['email']})
   jwt = credentials.get_access_token().access_token
-  return JSONEncoder().encode({'user': user, 'jwt': jwt})  
+  return JSONEncoder().encode({'user': user, 'jwt': jwt})
