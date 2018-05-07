@@ -207,11 +207,9 @@ export default function createServiceModule (servicePath) {
         },
         async patch ({ commit, dispatch }, [id, data, params]) {
           try {
-            const patchResponse = await api.put(servicePath + '/' + id, {
-              data,
-              params
-            })
-            const item = patchResponse.data
+            await api.put(servicePath + '/' + id, data, params)
+            const item = await dispatch('get', id)
+            console.log(item)
             dispatch('addOrUpdate', item)
             return item
           } catch (error) {

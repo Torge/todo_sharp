@@ -16,6 +16,10 @@
     "project": {
       "model": "project",
       "via": "ticket"
+    },
+    "status": {
+      "multiple": false,
+      "type": "string"
     }
   }
 }

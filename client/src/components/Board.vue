@@ -27,7 +27,7 @@ export default {
       return this.$store.getters['project/current']
     },
     tickets () {
-      return this.project.ticket
+      return this.$store.getters['ticket/list'].filter(ticket => ticket.projectId === this.project._id)
     },
     todoTickets () {
       return this.tickets.filter(ticket => ticket.status === '0')
@@ -40,10 +40,9 @@ export default {
     }
   },
   methods: {
-    moveTicket (event, status) {
+    async moveTicket (event, status) {
       const id = event.dataTransfer.getData('id')
-      let ticket = this.tickets.find(ticket => ticket.id === id)
-      ticket.status = status
+      await this.$store.dispatch('ticket/patch', [id, {status}])
     }
   }
 }

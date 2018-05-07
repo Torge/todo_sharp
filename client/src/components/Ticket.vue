@@ -1,8 +1,8 @@
 <template>
   <b-card
-    :title="ticket.title"
+    :title="ticket.name"
     draggable
-    @dragstart="$event.dataTransfer.setData('id', ticket.id)"
+    @dragstart="$event.dataTransfer.setData('id', ticket._id)"
   />
 </template>
 

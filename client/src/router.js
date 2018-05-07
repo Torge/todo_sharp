@@ -11,6 +11,7 @@ import ProjectKanban from '@/views/ProjectKanban'
 import ProjectList from '@/views/ProjectList'
 import ProjectDetail from '@/views/ProjectDetail'
 import ProjectEdit from '@/views/ProjectEdit'
+import ProjectCreate from '@/views/ProjectCreate'
 
 import UserList from '@/views/UserList'
 import UserDetail from '@/views/UserDetail'
@@ -18,6 +19,7 @@ import UserEdit from '@/views/UserEdit'
 
 import TicketDetail from '@/views/TicketDetail'
 import TicketEdit from '@/views/TicketEdit'
+import TicketCreate from '@/views/TicketCreate'
 
 Vue.use(Router)
 
@@ -44,7 +46,7 @@ export default new Router({
         {
           path: '/project/create',
           name: 'project-create',
-          component: ProjectEdit
+          component: ProjectCreate
         },
         {
           path: '/project/:projectId',
@@ -104,6 +106,11 @@ export default new Router({
             await store.dispatch('user/get', to.params.userId)
             next()
           }
+        },
+        {
+          path: '/ticket/create',
+          name: 'ticket-create',
+          component: TicketCreate
         },
         {
           path: '/ticket/:ticketId/detail',
