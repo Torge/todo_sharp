@@ -10,6 +10,7 @@
 
         <b-navbar-nav>
           <b-nav-item :to="{name: 'project-list'}" >Projekte</b-nav-item>
+          <b-nav-item :to="{name: 'user-list'}" >User</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

@@ -46,7 +46,11 @@ export default new Router({
         {
           path: '/project/create',
           name: 'project-create',
-          component: ProjectCreate
+          component: ProjectCreate,
+          async beforeEnter (to, form, next) {
+            await store.dispatch('user/find')
+            next()
+          }
         },
         {
           path: '/project/:projectId',

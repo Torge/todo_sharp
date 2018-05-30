@@ -12,7 +12,7 @@
 import Board from '@/components/Board'
 
 export default {
-  name: 'App',
+  name: 'KanbanBoard',
   components: {
     Board
   },
