@@ -1,11 +1,13 @@
 <template>
   <b-card v-if="project">
-    <p></p>
-    <h2  class="float-left">Project: {{ project.name }}</h2>
-    <h2 class="float-right">Admin: {{project.selectedAdmin}}</h2>
-
-    <b-btn class="float-left deleteBtn" @click="deleteProject" >Delete Project</b-btn>
-    <b-btn class="float-right createBtn" @click="addTicket" >Create Ticket</b-btn>
+    <div class="float-left">
+      <h2>Project: {{ project.name }}</h2>
+      <b-btn variant="primary" @click="addTicket" >Create Ticket</b-btn>
+    </div>
+    <div class="float-right">
+      <h2>Admin: {{ project.selectedAdmin }}</h2>
+      <b-btn variant="danger" @click="deleteProject" >Delete Project</b-btn>
+    </div>
     <div id="board">
       <board/>
     </div>
@@ -13,38 +15,32 @@
 </template>
 
 <script>
-  import Board from '@/components/Board'
+import Board from '@/components/Board'
 
-  export default {
-    name: 'KanbanBoard',
-    components: {
-      Board
+export default {
+  name: 'KanbanBoard',
+  components: {
+    Board
+  },
+  computed: {
+    project () {
+      return this.$store.getters['project/current']
+    }
+  },
+  methods: {
+    addTicket () {
+      return this.$router.push({name: 'ticket-create'})
     },
-    computed: {
-      project () {
-        return this.$store.getters['project/current']
-      }
-    },
-    methods: {
-      addTicket () {
-        return this.$router.push({name: 'ticket-create'})
-      },
-      async deleteProject(){
-        await
-          this.$store.dispatch('project/remove', this.project._id);
-        await this.$router.push({name: 'project-list'})
-      }
+    async deleteProject () {
+      await
+      this.$store.dispatch('project/remove', this.project._id)
+      await this.$router.push({name: 'project-list'})
     }
   }
+}
 </script>
 
 <style>
-  .createBtn {
-    background-color: #007bff;
-  }
-  .deleteBtn {
-    background-color: #b21f2d;
-  }
   .todoCard {
     background-color: #b21f2d;
   }

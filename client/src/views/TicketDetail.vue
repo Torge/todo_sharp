@@ -7,22 +7,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'TicketDetail',
-    computed: {
-      ticket () {
-        return this.$store.getters['ticket/current']
-      }
-    },
-    methods: {
-      async deleteTicket() {
-        await
-          this.$store.dispatch('ticket/remove', this.ticket.id);
-        await
-          this.$router.push({name: 'project-kanban', params: {projectId: project._id}})
-      }
+export default {
+  name: 'TicketDetail',
+  computed: {
+    ticket () {
+      return this.$store.getters['ticket/current']
+    }
+  },
+  methods: {
+    async deleteTicket () {
+      await
+      this.$store.dispatch('ticket/remove', this.ticket.id)
+      await this.$router.push({name: 'project-kanban', params: {projectId: this.$store.project.currentId}})
     }
   }
+}
 </script>
 
 <style scoped>
