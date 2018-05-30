@@ -20,6 +20,10 @@
     "status": {
       "multiple": false,
       "type": "string"
+    },
+    "info": {
+      "multiple": false,
+      "type": "string"
     }
   }
 }

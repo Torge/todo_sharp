@@ -27,7 +27,7 @@ export default {
       return this.$store.getters['project/current']
     },
     tickets () {
-      return this.$store.getters['ticket/list'].filter(ticket => ticket.projectId === this.project._id)
+      return this.$store.getters['ticket/list'].filter(ticket => ticket.project._id === this.project._id)
     },
     todoTickets () {
       return this.tickets.filter(ticket => ticket.status === '0')

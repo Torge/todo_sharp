@@ -62,7 +62,7 @@ export default new Router({
           component: ProjectKanban,
           async beforeEnter (to, form, next) {
             await store.dispatch('project/get', to.params.projectId)
-            await store.dispatch('ticket/find', {projectId: to.params.projectId})
+            await store.dispatch('ticket/find', {project: to.params.projectId})
             next()
           }
         },
@@ -72,6 +72,7 @@ export default new Router({
           component: ProjectDetail,
           async beforeEnter (to, form, next) {
             await store.dispatch('project/get', to.params.projectId)
+            await store.dispatch('ticket/find', {project: to.params.projectId})
             next()
           }
         },
