@@ -7,19 +7,19 @@
 
 <script>
 
-  export default {
-    name: 'UserDetail',
-    computed: {
-      users () {
-        return this.$store.getters['users/current']
-      }
-    },
-    methods: {
-      editUser () {
+export default {
+  name: 'UserDetail',
+  computed: {
+    users () {
+      return this.$store.getters['users/current']
+    }
+  },
+  methods: {
+    editUser () {
 
-      }
     }
   }
+}
 </script>
 
 <style scoped>

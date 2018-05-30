@@ -15,28 +15,28 @@
 </template>
 
 <script>
-  export default {
-    name: 'UserList',
-    data () {
-      return {
-        user: {
-          id: '',
-          name: '',
-          email: ''
-        }
-      }
-    },
-    computed: {
-      users () {
-        return this.$store.getters['user/list']
-      }
-    },
-    methods: {
-      navigate (users) {
-        this.$router.push({name: 'user-detail', params: {userId: users._id}})
+export default {
+  name: 'UserList',
+  data () {
+    return {
+      user: {
+        id: '',
+        name: '',
+        email: ''
       }
     }
+  },
+  computed: {
+    users () {
+      return this.$store.getters['user/list']
+    }
+  },
+  methods: {
+    navigate (users) {
+      this.$router.push({name: 'user-detail', params: {userId: users._id}})
+    }
   }
+}
 </script>
 
 <style scoped>

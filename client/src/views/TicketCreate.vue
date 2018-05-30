@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async createTicket () {
-      const projectId = this.$store.getters['project/current']._id;
+      const projectId = this.$store.getters['project/current']._id
       await this.$store.dispatch('ticket/create', {
         ...this.ticket,
         project: projectId,
