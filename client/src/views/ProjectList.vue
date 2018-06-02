@@ -1,8 +1,8 @@
 <template>
   <div>
     <b-card class="mt-3">
-      Projekte
-      <b-btn class="float-right" variant="primary" @click="addProject">Projekt hinzufügen</b-btn>
+      Projects
+      <b-btn class="float-right" variant="primary" @click="addProject">Create Project</b-btn>
     </b-card>
     <b-table
       :items="projects"

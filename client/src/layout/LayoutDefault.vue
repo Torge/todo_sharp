@@ -9,7 +9,7 @@
       <b-collapse id="nav_collapse" is-nav>
 
         <b-navbar-nav>
-          <b-nav-item :to="{name: 'project-list'}" >Projekte</b-nav-item>
+          <b-nav-item :to="{name: 'project-list'}" >Projects</b-nav-item>
           <b-nav-item :to="{name: 'user-list'}" >User</b-nav-item>
         </b-navbar-nav>
 

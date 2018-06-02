@@ -6,7 +6,7 @@
     </div>
     <div class="float-right">
       <h2>Admin: {{ project.selectedAdmin }}</h2>
-      <b-btn variant="danger" @click="deleteProject" >Delete Project</b-btn>
+      <b-btn class="float-right" variant="danger" @click="deleteProject" >Delete Project</b-btn>
     </div>
     <div id="board">
       <board/>

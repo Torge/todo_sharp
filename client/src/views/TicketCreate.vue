@@ -5,22 +5,17 @@
         <b-form-input id="name"
                       v-model="ticket.name"
                       required
-                      placeholder="Name des Tickets"
+                      placeholder="Ticketname"
         />
-        <b-form-input id="info"
-                      v-model="ticket.info"
+        <b-form-input id="desc"
+                      v-model="ticket.desc"
                       required
-                      placeholder="Beschreibung"
+                      placeholder="Description"
         />
-        <select id="status"
-                v-model="ticket.status"
-                required
-                placeholder="Status">
-          <option value="" disabled selected>Select Ticket Status</option>
-          <option value="todo">ToDo</option>
-          <option value="doing">Doing</option>
-          <option value="done">Done</option>
-        </select>
+        <b-form-radio-group id="status"
+                            v-model="ticket.status"
+                            required
+                            :options="options"/>
       </b-form-group>
       <b-button type="submit" variant="primary">Create</b-button>
     </b-form>
@@ -34,9 +29,14 @@ export default {
     return {
       ticket: {
         name: '',
-        info: '',
+        desc: '',
         status: ''
-      }
+      },
+      options: [
+        { text: 'Todo', value: '1', },
+        { text: 'Doing', value: '2' },
+        { text: 'Done', value: '3'}
+      ]
     }
   },
   methods: {
@@ -44,7 +44,7 @@ export default {
       const projectId = this.$store.getters['project/current']._id
       await this.$store.dispatch('ticket/create', {
         ...this.ticket,
-        project: projectId,
+        projectId: projectId,
         status: '0'
       })
       await this.$router.push({name: 'project-kanban', params: {projectId}})
