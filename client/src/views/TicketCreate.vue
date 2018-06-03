@@ -7,17 +7,19 @@
                       required
                       placeholder="Ticketname"
         />
-        <b-form-input id="desc"
+        <b-form-textarea id="desc"
                       v-model="ticket.desc"
                       required
+                      rows="4"
                       placeholder="Description"
         />
-        <b-form-radio-group id="status"
-                            v-model="ticket.status"
-                            required
-                            :options="options"/>
+        <b-form-select
+                id="status"
+                v-model="ticket.status"
+                required
+                :options="options"/>
+        <b-button type="submit" variant="primary">Create</b-button>
       </b-form-group>
-      <b-button type="submit" variant="primary">Create</b-button>
     </b-form>
   </b-card>
 </template>
@@ -33,9 +35,9 @@ export default {
         status: ''
       },
       options: [
-        { text: 'Todo', value: '1', },
-        { text: 'Doing', value: '2' },
-        { text: 'Done', value: '3'}
+        { text: 'Todo', value: 'todo', },
+        { text: 'Doing', value: 'doing' },
+        { text: 'Done', value: 'done'}
       ]
     }
   },
