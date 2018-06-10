@@ -1,6 +1,6 @@
 {
   "connection": "default",
-  "collectionName": "",
+  "collectionName": "project",
   "info": {
     "name": "project",
     "description": ""
@@ -13,9 +13,10 @@
       "multiple": false,
       "type": "string"
     },
-    "ticket": {
+    "ticketId": {
+      "columnName": "tickets",
       "collection": "ticket",
-      "via": "project"
+      "via": "projectId"
     }
   }
 }

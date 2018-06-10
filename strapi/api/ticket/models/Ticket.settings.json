@@ -13,10 +13,6 @@
       "multiple": false,
       "type": "string"
     },
-    "project": {
-      "model": "project",
-      "via": "ticket"
-    },
     "status": {
       "multiple": false,
       "type": "string"
@@ -24,6 +20,11 @@
     "info": {
       "multiple": false,
       "type": "string"
+    },
+    "projectId": {
+      "model": "project",
+      "via": "ticketId",
+      "columnName": "project"
     }
   }
 }

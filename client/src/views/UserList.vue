@@ -17,18 +17,12 @@
 <script>
 export default {
   name: 'UserList',
-  data () {
-    return {
-      user: {
-        id: '',
-        name: '',
-        email: ''
-      }
-    }
-  },
   computed: {
     users () {
-      return this.$store.getters['user/list']
+      return this.$store.getters['user/list'].map(({email, username}) => ({
+        email,
+        username
+      }))
     }
   },
   methods: {

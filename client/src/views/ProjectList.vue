@@ -16,11 +16,19 @@
 </template>
 
 <script>
+import moment from 'moment'
+moment.locale('de')
 export default {
   name: 'ProjectList',
   computed: {
     projects () {
-      return this.$store.getters['project/list']
+      return this.$store.getters['project/list'].map(({name, createdAt, selectedAdmin}) => {
+        return {
+          name,
+          createdAt: moment(createdAt).format('DD.MM.YYYY'),
+          selectedAdmin
+        }
+      })
     }
   },
   methods: {
