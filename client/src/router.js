@@ -72,7 +72,7 @@ const router = new Router({
         await store.dispatch('project/get', to.params.projectId)
         await store.dispatch('user/get', to.params.userId)
         await store.dispatch('ticket/find', {
-          project: to.params.projectId
+          projectId: to.params.projectId
         })
         next()
       }
@@ -119,6 +119,7 @@ const router = new Router({
       }
     },
     {
+
       path: '/ticket/:ticketId/edit',
       name: 'ticket-edit',
       component: TicketEdit,
@@ -134,7 +135,7 @@ const router = new Router({
       async beforeEnter (to, from, next) {
         await store.dispatch('project/get', to.params.projectId)
         await store.dispatch('ticket/find', {
-          project: to.params.projectId
+          projectId: to.params.projectId
         })
         next()
       }
