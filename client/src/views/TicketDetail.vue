@@ -1,7 +1,6 @@
 <template>
-  <section>
-    <b-card v-if="ticket"
-            title="Ticket">
+  <section v-if="ticket">
+    <b-card title="Ticket">
       <p>
         <b>Name:</b> {{ ticket.name }}
       </p>
@@ -27,7 +26,8 @@
              @click="editTicket">
         Edit Ticket
       </b-btn>
-      <b-btn class="float-left"
+      <b-btn v-if="user._id === ticket.authorId || user._id === project.adminId"
+             class="float-left"
              variant="danger"
              @click="deleteTicket">
         Delete Ticket
@@ -53,6 +53,9 @@ export default {
     },
     user () {
       return this.$store.state.auth.user
+    },
+    project () {
+      return this.$store.getters['project/get'](this.ticket.projectId)
     },
     author () {
       return this.$store.getters['user/get'](this.ticket.authorId)

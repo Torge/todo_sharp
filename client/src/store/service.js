@@ -2,6 +2,7 @@ import isObject from 'lodash.isobject'
 import _cloneDeep from 'lodash.clonedeep'
 import _merge from 'lodash.merge'
 import api from '@/api.js'
+import socket from '@/socket.js'
 
 export default function createServiceModule (servicePath) {
   return function setupStore (store) {
@@ -163,7 +164,9 @@ export default function createServiceModule (servicePath) {
       actions: {
         async find ({ commit, dispatch, getters }, params = {}) {
           try {
-            const findResponse = await api.get(servicePath, { params })
+            const findResponse = await api.get(servicePath, {
+              params
+            })
             dispatch('addOrUpdateList', findResponse.data)
             return findResponse.data
           } catch (error) {
@@ -200,6 +203,13 @@ export default function createServiceModule (servicePath) {
             const item = createResponse.data
             dispatch('addOrUpdate', item)
             commit('setCurrent', item)
+            socket.send(
+              JSON.stringify({
+                servicePath,
+                action: 'get',
+                _id: item._id
+              })
+            )
             return item
           } catch (error) {
             return Promise.reject(error)
@@ -209,8 +219,14 @@ export default function createServiceModule (servicePath) {
           try {
             await api.put(servicePath + '/' + id, data, params)
             const item = await dispatch('get', id)
-            console.log(item)
             dispatch('addOrUpdate', item)
+            socket.send(
+              JSON.stringify({
+                servicePath,
+                action: 'get',
+                _id: item._id
+              })
+            )
             return item
           } catch (error) {
             return Promise.reject(error)
@@ -221,6 +237,13 @@ export default function createServiceModule (servicePath) {
           try {
             const removeResponse = await api.delete(servicePath + '/' + id)
             const item = removeResponse.data
+            socket.send(
+              JSON.stringify({
+                servicePath,
+                action: 'remove',
+                _id: id
+              })
+            )
             commit('removeItem', id)
             return item
           } catch (error) {
@@ -242,10 +265,7 @@ export default function createServiceModule (servicePath) {
             existingItem ? toUpdate.push(item) : toAdd.push(item)
           })
           state.ids.forEach(id => {
-            if (
-              id !== state.currentId &&
-              !list.some(item => item._id === id)
-            ) {
+            if (id !== state.currentId && !list.some(item => item._id === id)) {
               toRemove.push(state.keyedById[id])
             }
           })
@@ -266,6 +286,7 @@ export default function createServiceModule (servicePath) {
     })
   }
 }
+
 function addItem (state, item) {
   let id = item._id
 
@@ -278,10 +299,12 @@ function addItem (state, item) {
     [id]: item
   }
 }
+
 function updateItem (state, item) {
   let id = item._id
   state.keyedById[id] = item
 }
+
 function checkId (id, item) {
   if (id === undefined) {
     throw new Error(

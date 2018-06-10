@@ -2,7 +2,8 @@
   <div class="login text-center">
     <h2>Todo#</h2>
     <a :href="authLink">
-      <b-btn block variant="primary">
+      <b-btn block
+             variant="primary">
         <span v-if="!loginPending">Login via Google</span>
         <span v-else>Logging in...</span>
       </b-btn>
@@ -23,7 +24,9 @@ export default {
     const accessToken = this.$route.query.access_token || this.$route.query.code
     if (accessToken) {
       this.loginPending = true
-      await this.$store.dispatch('auth/authenticate', accessToken).then(() => this.$router.push({name: 'project-list'}))
+      await this.$store
+        .dispatch('auth/authenticate', accessToken)
+        .then(() => this.$router.push({ name: 'project-list' }))
       this.loginPending = false
     }
   },
