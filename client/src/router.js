@@ -118,7 +118,8 @@ const router = new Router({
       name: 'ticket-detail',
       component: TicketDetail,
       async beforeEnter (to, from, next) {
-        await store.dispatch('ticket/get', to.params.ticketId)
+        let ticket = await store.dispatch('ticket/get', to.params.ticketId)
+        await store.dispatch('project/get', ticket.projectId)
         next()
       }
     },

@@ -10,7 +10,8 @@
       </div>
       <div class="float-right">
         <p>Admin: {{ admin.username }}</p>
-        <b-btn class="float-right"
+        <b-btn v-if="project.adminId === user._id"
+               class="float-right"
                variant="danger"
                @click="deleteProject">Delete Project</b-btn>
       </div>
@@ -37,6 +38,9 @@ export default {
     },
     admin () {
       return this.$store.getters['user/get'](this.project.adminId)
+    },
+    user () {
+      return this.$store.state.auth.user
     }
   },
   methods: {
