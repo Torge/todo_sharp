@@ -4,6 +4,7 @@
       <div class="float-left">
         <h2>Project: {{ project.name }}</h2>
         <b-btn variant="primary" @click="addTicket" >Create Ticket</b-btn>
+        <b-btn variant="primary" @click="showInsights">Project Insights</b-btn>
       </div>
       <div class="float-right">
         <h2>Admin: {{ project.selectedAdmin }}</h2>
@@ -16,7 +17,6 @@
       </div>
     </b-card>
   </div>
-  
 </template>
 
 <script>
@@ -35,6 +35,9 @@ export default {
   methods: {
     addTicket () {
       return this.$router.push({name: 'ticket-create'})
+    },
+    showInsights () {
+      return this.$router.push({name: 'project-insights', params: {projectId: this.project._id}})
     },
     async deleteProject () {
       await

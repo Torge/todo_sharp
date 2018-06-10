@@ -14,6 +14,7 @@ import ProjectList from '@/views/ProjectList'
 import ProjectDetail from '@/views/ProjectDetail'
 import ProjectEdit from '@/views/ProjectEdit'
 import ProjectCreate from '@/views/ProjectCreate'
+import ProjectInsights from '@/views/ProjectInsights'
 
 import UserList from '@/views/UserList'
 import UserDetail from '@/views/UserDetail'
@@ -40,7 +41,7 @@ const router = new Router({
           path: '/project/list',
           name: 'project-list',
           component: ProjectList,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('project/find')
             next()
           }
@@ -49,7 +50,7 @@ const router = new Router({
           path: '/project/create',
           name: 'project-create',
           component: ProjectCreate,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('user/find')
             next()
           }
@@ -62,7 +63,7 @@ const router = new Router({
           path: '/project/:projectId/kanban',
           name: 'project-kanban',
           component: ProjectKanban,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('project/get', to.params.projectId)
             await store.dispatch('ticket/find', {projectId: to.params.projectId})
             next()
@@ -72,7 +73,7 @@ const router = new Router({
           path: '/project/:projectId/detail',
           name: 'project-detail',
           component: ProjectDetail,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('project/get', to.params.projectId)
             await store.dispatch('ticket/find', {project: to.params.projectId})
             next()
@@ -82,7 +83,7 @@ const router = new Router({
           path: '/project/:projectId/edit',
           name: 'project-edit',
           component: ProjectEdit,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('project/get', to.params.projectId)
             next()
           }
@@ -91,7 +92,7 @@ const router = new Router({
           path: '/user/list',
           name: 'user-list',
           component: UserList,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('user/find')
             next()
           }
@@ -100,7 +101,7 @@ const router = new Router({
           path: '/user/:userId/detail',
           name: 'user-detail',
           component: UserDetail,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('user/get', to.params.userId)
             next()
           }
@@ -109,7 +110,7 @@ const router = new Router({
           path: '/user/:userId/edit',
           name: 'user-edit',
           component: UserEdit,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('user/get', to.params.userId)
             next()
           }
@@ -123,7 +124,7 @@ const router = new Router({
           path: '/ticket/:ticketId/detail',
           name: 'ticket-detail',
           component: TicketDetail,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('ticket/get', to.params.ticketId)
             next()
           }
@@ -132,8 +133,18 @@ const router = new Router({
           path: '/ticket/:ticketId/edit',
           name: 'ticket-edit',
           component: TicketEdit,
-          async beforeEnter (to, form, next) {
+          async beforeEnter (to, from, next) {
             await store.dispatch('ticket/get', to.params.ticketId)
+            next()
+          }
+        },
+        {
+          path: '/project/:projectId/insights',
+          name: 'project-insights',
+          component: ProjectInsights,
+          async beforeEnter (to, from, next) {
+            await store.dispatch('project/get', to.params.projectId)
+            await store.dispatch('ticket/find', {project: to.params.projectId})
             next()
           }
         }
