@@ -1,16 +1,19 @@
 <template>
   <div>
-    <b-navbar toggleable="md" type="dark" variant="primary">
+    <b-navbar toggleable="md"
+              type="dark"
+              variant="primary">
 
-      <b-navbar-toggle target="nav_collapse"/>
+      <b-navbar-toggle target="nav_collapse" />
 
       <b-navbar-brand href="#">ToDo#</b-navbar-brand>
 
-      <b-collapse id="nav_collapse" is-nav>
+      <b-collapse id="nav_collapse"
+                  is-nav>
 
         <b-navbar-nav>
-          <b-nav-item :to="{name: 'project-list'}" >Projects</b-nav-item>
-          <b-nav-item :to="{name: 'user-list'}" >User</b-nav-item>
+          <b-nav-item :to="{name: 'project-list'}">Projects</b-nav-item>
+          <b-nav-item :to="{name: 'user-list'}">User</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -21,7 +24,7 @@
               <em>User</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Signout</b-dropdown-item>
+            <b-dropdown-item @click="logout">Signout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -34,10 +37,15 @@
 
 <script>
 export default {
-  name: 'LayoutDefault'
+  name: 'LayoutDefault',
+  methods: {
+    logout () {
+      this.$store.commit('auth/logout')
+      this.$router.push({ name: 'login' })
+    }
+  }
 }
 </script>
 
 <style scoped>
-
 </style>
