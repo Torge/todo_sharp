@@ -105,9 +105,13 @@ const router = new Router({
       }
     },
     {
-      path: '/ticket/create',
+      path: '/project/:projectId/ticket/create',
       name: 'ticket-create',
-      component: TicketCreate
+      component: TicketCreate,
+      async beforeEnter (to, from, next) {
+        await store.dispatch('project/get', to.params.projectId)
+        next()
+      }
     },
     {
       path: '/ticket/:ticketId/detail',
