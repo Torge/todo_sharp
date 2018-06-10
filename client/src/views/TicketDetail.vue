@@ -96,9 +96,9 @@ export default {
             statusMap[event.status]
           }"`
         case 'move':
-          return `${timestamp}: Moved by ${user.username} from ${
+          return `${timestamp}: Moved by ${user.username} from "${
             statusMap[event.fromStatus]
-          } to ${statusMap[event.toStatus]}`
+          }" to "${statusMap[event.toStatus]}"`
         case 'assign':
           let assignee = this.$store.getters['user/get'](event.assigneeId)
           return `${timestamp}: ${user.username} assigned ${
