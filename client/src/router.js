@@ -11,7 +11,6 @@ import TicketCreate from '@/views/TicketCreate'
 import TicketDetail from '@/views/TicketDetail'
 import TicketEdit from '@/views/TicketEdit'
 import UserDetail from '@/views/UserDetail'
-import UserEdit from '@/views/UserEdit'
 import UserList from '@/views/UserList'
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -100,15 +99,6 @@ const router = new Router({
       path: '/user/:userId/detail',
       name: 'user-detail',
       component: UserDetail,
-      async beforeEnter (to, from, next) {
-        await store.dispatch('user/get', to.params.userId)
-        next()
-      }
-    },
-    {
-      path: '/user/:userId/edit',
-      name: 'user-edit',
-      component: UserEdit,
       async beforeEnter (to, from, next) {
         await store.dispatch('user/get', to.params.userId)
         next()
