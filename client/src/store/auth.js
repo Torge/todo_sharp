@@ -17,6 +17,7 @@ export default {
     logout (state) {
       state.accessToken = null
       delete localStorage['todo_sharp_jwt']
+      delete localStorage['todo_sharp_userId']
       if (state.user) {
         state.user = null
       }
