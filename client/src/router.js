@@ -75,7 +75,7 @@ const router = new Router({
           component: ProjectDetail,
           async beforeEnter (to, from, next) {
             await store.dispatch('project/get', to.params.projectId)
-            await store.dispatch('ticket/find', {project: to.params.projectId})
+            await store.dispatch('ticket/find', {projectId: to.params.projectId})
             next()
           }
         },
@@ -144,7 +144,7 @@ const router = new Router({
           component: ProjectInsights,
           async beforeEnter (to, from, next) {
             await store.dispatch('project/get', to.params.projectId)
-            await store.dispatch('ticket/find', {project: to.params.projectId})
+            await store.dispatch('ticket/find', {projectId: to.params.projectId})
             next()
           }
         }
