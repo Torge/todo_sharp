@@ -16,7 +16,6 @@
       </div>
     </b-card>
   </div>
-  
 </template>
 
 <script>

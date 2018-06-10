@@ -1,7 +1,32 @@
-export default function (to, from, next) {
+import store from './store'
+export default async function (to, from, next) {
   const publicPages = ['login']
-  if (publicPages.includes(name => to.name === name)) return next()
-  console.log(to)
-  const isAuthenticated = false
-  next()
+  if (publicPages.includes(to.name)) {
+    return next()
+  }
+  const isAuthenticated = !!store.state.auth.user
+  if (isAuthenticated) {
+    return next()
+  } else {
+    const jwt = localStorage['todo_sharp_jwt']
+    const userId = localStorage['todo_sharp_userId']
+    if (jwt) {
+      try {
+        await store.dispatch('auth/reAuthenticate', {
+          jwt,
+          userId
+        })
+        next()
+      } catch (e) {
+        console.log(e)
+        next({
+          name: 'login'
+        })
+      }
+    } else {
+      next({
+        name: 'login'
+      })
+    }
+  }
 }
