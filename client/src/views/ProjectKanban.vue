@@ -41,7 +41,10 @@ export default {
   },
   methods: {
     addTicket () {
-      return this.$router.push({ name: 'ticket-create' })
+      return this.$router.push({
+        name: 'ticket-create',
+        params: { projectId: this.project._id }
+      })
     },
     showInsights () {
       return this.$router.push({

@@ -21,9 +21,9 @@
           <b-nav-item-dropdown right>
             <!-- Using button-content slot -->
             <template slot="button-content">
-              <em>User</em>
+              <em>{{ user.username }}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'user-detail', params: {userId: user._id}}">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout">Signout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -38,6 +38,11 @@
 <script>
 export default {
   name: 'LayoutDefault',
+  computed: {
+    user () {
+      return this.$store.state.auth.user
+    }
+  },
   methods: {
     logout () {
       this.$store.commit('auth/logout')

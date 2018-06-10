@@ -5,21 +5,18 @@
         <b-form-input id="name"
                       v-model="ticket.name"
                       required
-                      placeholder="Ticketname"
-        />
+                      placeholder="Ticketname" />
         <b-form-textarea id="desc"
                          v-model="ticket.desc"
                          required
                          rows="4"
-                         placeholder="Description"
-        />
-        <b-form-select
-          id="status"
-          v-model="ticket.status"
-          :options="options"
-          required
-        />
-        <b-button type="submit" variant="primary">Create</b-button>
+                         placeholder="Description" />
+        <b-form-select id="status"
+                       v-model="ticket.status"
+                       :options="options"
+                       required />
+        <b-button type="submit"
+                  variant="primary">Create</b-button>
       </b-form-group>
     </b-form>
   </b-card>
@@ -44,24 +41,25 @@ export default {
   },
   methods: {
     async createTicket () {
-      const projectId = this.$store.getters['project/current']._id
+      const projectId = this.$route.params.projectId
       const authorId = this.$store.state.auth.user._id
-      this.ticket.history = [{
-        type: 'created',
-        authorId
-      }]
+      this.ticket.history = [
+        {
+          type: 'created',
+          authorId
+        }
+      ]
       await this.$store.dispatch('ticket/create', {
         ...this.ticket,
         projectId: projectId,
         authorId,
         status: '0'
       })
-      await this.$router.push({name: 'project-kanban', params: {projectId}})
+      await this.$router.push({ name: 'project-kanban', params: { projectId } })
     }
   }
 }
 </script>
 
 <style scoped>
-
 </style>
