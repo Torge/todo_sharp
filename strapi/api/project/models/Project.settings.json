@@ -13,10 +13,9 @@
       "multiple": false,
       "type": "string"
     },
-    "ticketId": {
-      "columnName": "tickets",
-      "collection": "ticket",
-      "via": "projectId"
+    "adminId": {
+      "multiple": false,
+      "type": "string"
     }
   }
 }

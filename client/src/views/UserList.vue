@@ -5,6 +5,7 @@
     </b-card>
     <b-table
       :items="users"
+      :fields="['email', 'username']"
       striped
       outlined
       responsive
@@ -19,10 +20,7 @@ export default {
   name: 'UserList',
   computed: {
     users () {
-      return this.$store.getters['user/list'].map(({email, username}) => ({
-        email,
-        username
-      }))
+      return this.$store.getters['user/list']
     }
   },
   methods: {

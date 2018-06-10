@@ -22,9 +22,8 @@
       "type": "string"
     },
     "projectId": {
-      "model": "project",
-      "via": "ticketId",
-      "columnName": "project"
+      "multiple": false,
+      "type": "string"
     }
   }
 }

@@ -6,6 +6,7 @@
     </b-card>
     <b-table
       :items="projects"
+      :fields="['name', 'createdAt', 'selectedAdmin']"
       striped
       outlined
       responsive
@@ -22,11 +23,10 @@ export default {
   name: 'ProjectList',
   computed: {
     projects () {
-      return this.$store.getters['project/list'].map(({name, createdAt, selectedAdmin}) => {
+      return this.$store.getters['project/list'].map((project) => {
         return {
-          name,
-          createdAt: moment(createdAt).format('DD.MM.YYYY'),
-          selectedAdmin
+          ...project,
+          createdAt: moment(project.createdAt).format('DD.MM.YYYY')
         }
       })
     }
