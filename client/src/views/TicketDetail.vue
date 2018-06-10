@@ -26,6 +26,11 @@
              @click="editTicket">
         Edit Ticket
       </b-btn>
+      <b-btn class="float-left"
+             variant="primary"
+             @click="$router.push({name: 'project-kanban', params: {projectId: project._id}})">
+        Back
+      </b-btn>
       <b-btn v-if="user._id === ticket.authorId || user._id === project.adminId"
              class="float-left"
              variant="danger"

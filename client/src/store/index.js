@@ -20,7 +20,6 @@ const store = new Vuex.Store({
 
 socket.onmessage = message => {
   const event = JSON.parse(message.data)
-  console.log(event)
   if (event.action === 'remove') {
     store.commit(`${event.servicePath}/removeItem`, event._id)
   } else {

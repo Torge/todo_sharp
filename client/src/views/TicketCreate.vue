@@ -1,58 +1,40 @@
 <template>
   <b-card title="Create new Ticket">
-    <b-form @submit.prevent="createTicket">
-      <b-form-group>
-        <b-form-input id="name"
-                      v-model="ticket.name"
-                      required
-                      placeholder="Ticketname" />
-        <b-form-textarea id="desc"
-                         v-model="ticket.desc"
-                         required
-                         rows="4"
-                         placeholder="Description" />
-        <b-form-select id="status"
-                       v-model="ticket.status"
-                       :options="options"
-                       required />
-        <b-button type="submit"
-                  variant="primary">Create</b-button>
-      </b-form-group>
-    </b-form>
+    <ticket-form :ticket="ticket"
+                 @submit="createTicket" />
   </b-card>
 </template>
 
 <script>
+import TicketForm from '@/components/TicketForm'
 export default {
   name: 'TicketCreate',
+  components: {
+    TicketForm
+  },
   data () {
     return {
       ticket: {
         name: '',
         desc: '',
-        status: ''
-      },
-      options: [
-        { text: 'Todo', value: '0' },
-        { text: 'Doing', value: '1' },
-        { text: 'Done', value: '2' }
-      ]
+        status: '0'
+      }
     }
   },
   methods: {
-    async createTicket () {
+    async createTicket (ticket) {
       const projectId = this.$route.params.projectId
       const authorId = this.$store.state.auth.user._id
-      this.ticket.history = [
+      ticket.history = [
         {
           type: 'created',
           userId: authorId,
-          status: this.ticket.status,
+          status: ticket.status,
           timestamp: new Date()
         }
       ]
       await this.$store.dispatch('ticket/create', {
-        ...this.ticket,
+        ...ticket,
         projectId: projectId,
         authorId
       })
