@@ -17,11 +17,19 @@
       "multiple": false,
       "type": "string"
     },
-    "info": {
+    "desc": {
       "multiple": false,
       "type": "string"
     },
     "projectId": {
+      "multiple": false,
+      "type": "string"
+    },
+    "authorId": {
+      "multiple": false,
+      "type": "string"
+    },
+    "assigneeId": {
       "multiple": false,
       "type": "string"
     }

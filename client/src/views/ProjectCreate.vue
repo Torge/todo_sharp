@@ -7,9 +7,9 @@
                       required
                       placeholder="Project Name"
         />
-        <select v-model="project.selectedAdmin">
+        <select v-model="project.adminId">
           <option value="" disabled selected>Select Project Admin</option>
-          <option v-for="user of users" :key="user.id" :value="user.username">{{ user.username }}</option>
+          <option v-for="user of users" :key="user.id" :value="user._id">{{ user.username }}</option>
         </select>
       </b-form-group>
       <b-button type="submit" variant="primary">Create</b-button>
@@ -25,7 +25,7 @@ export default {
     return {
       project: {
         name: '',
-        selectedAdmin: ''
+        adminId: ''
       }
     }
   },
@@ -37,7 +37,6 @@ export default {
   methods: {
     async createProject () {
       let project = await this.$store.dispatch('project/create', this.project)
-      console.log(this.project, project)
       this.$router.push({name: 'project-kanban', params: {projectId: project._id}})
     }
   }
