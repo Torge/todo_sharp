@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store/'
 
+import authGuard from './authGuard'
+
 import LayoutDefault from '@/layout/LayoutDefault'
 import LayoutLogin from '@/layout/LayoutLogin'
 
@@ -23,7 +25,7 @@ import TicketCreate from '@/views/TicketCreate'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -150,3 +152,5 @@ export default new Router({
     }
   ]
 })
+router.beforeEach(authGuard)
+export default router

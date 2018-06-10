@@ -45,9 +45,15 @@ export default {
   methods: {
     async createTicket () {
       const projectId = this.$store.getters['project/current']._id
+      const authorId = this.$store.state.auth.user._id
+      this.ticket.history = [{
+        type: 'created',
+        authorId
+      }]
       await this.$store.dispatch('ticket/create', {
         ...this.ticket,
         projectId: projectId,
+        authorId,
         status: '0'
       })
       await this.$router.push({name: 'project-kanban', params: {projectId}})

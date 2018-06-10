@@ -1,17 +1,22 @@
 <template>
-  <b-card v-if="project">
-    <div class="float-left">
-      <h2>Project: {{ project.name }}</h2>
-      <b-btn variant="primary" @click="addTicket" >Create Ticket</b-btn>
-    </div>
-    <div class="float-right">
-      <h2>Admin: {{ project.selectedAdmin }}</h2>
-      <b-btn class="float-right" variant="danger" @click="deleteProject" >Delete Project</b-btn>
-    </div>
-    <div id="board">
-      <board/>
-    </div>
-  </b-card>
+  <div>
+    <b-card v-if="project">
+      <div class="float-left">
+        <h2>Project: {{ project.name }}</h2>
+        <b-btn variant="primary" @click="addTicket" >Create Ticket</b-btn>
+      </div>
+      <div class="float-right">
+        <h2>Admin: {{ project.selectedAdmin }}</h2>
+        <b-btn class="float-right" variant="danger" @click="deleteProject" >Delete Project</b-btn>
+      </div>
+    </b-card>
+    <b-card>
+      <div id="board">
+        <board/>
+      </div>
+    </b-card>
+  </div>
+  
 </template>
 
 <script>
