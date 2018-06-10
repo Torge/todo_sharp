@@ -1,15 +1,16 @@
 <template>
   <div>
+    <b-card title="Project Insights"/>
     <b-card>
-      <div>
-        <b-progress-bar :value= "tickets.length" :max= "tickets.length" class="mt-1" show-value animated/>
-        <b-progress :max= "tickets.length"
-                    class="mt-1"
-                    show-value>
-          <b-progress-bar :value= "todoTickets.length" variant="success"/>
-          <b-progress-bar :value= "doingTickets.length" variant="warning"/>
-          <b-progress-bar :value= "doneTickets.length" variant="danger"/>
-        </b-progress>
+      <div v-for="bar in bars" :key="bar.label" class="row mb-1">
+        <div class="col-sm-2">{{ bar.label }}</div>
+        <div class="col-sm-10 pt-1">
+          <b-progress :value="bar.value"
+                      :variant="bar.variant"
+                      :max="tickets.length"
+                      show-value
+          />
+        </div>
       </div>
     </b-card>
   </div>
@@ -33,7 +34,32 @@ export default {
     },
     doneTickets () {
       return this.tickets.filter(ticket => ticket.status === '2')
+    },
+    bars () {
+      return [
+        {
+          label: 'Tickets:',
+          value: this.tickets.length,
+          variant: 'primary'
+        },
+        {
+          label: 'Todo:',
+          value: this.todoTickets.length,
+          variant: 'danger'
+        },
+        {
+          label: 'Doing:',
+          value: this.doingTickets.length,
+          variant: 'warning'
+        },
+        {
+          label: 'Done:',
+          value: this.doneTickets.length,
+          variant: 'success'
+        }
+      ]
     }
+
   }
 }
 
