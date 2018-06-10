@@ -49,7 +49,8 @@ export default {
         type: 'move',
         userId: this.user._id,
         fromStatus: ticket.status,
-        toStatus: status
+        toStatus: status,
+        timestamp: new Date()
       })
       ticket.status = status
       await this.$store.dispatch('ticket/patch', [id, ticket])

@@ -33,9 +33,9 @@ export default {
         status: ''
       },
       options: [
-        { text: 'Todo', value: 'todo' },
-        { text: 'Doing', value: 'doing' },
-        { text: 'Done', value: 'done' }
+        { text: 'Todo', value: '0' },
+        { text: 'Doing', value: '1' },
+        { text: 'Done', value: '2' }
       ]
     }
   },
@@ -46,14 +46,15 @@ export default {
       this.ticket.history = [
         {
           type: 'created',
-          authorId
+          userId: authorId,
+          status: this.ticket.status,
+          timestamp: new Date()
         }
       ]
       await this.$store.dispatch('ticket/create', {
         ...this.ticket,
         projectId: projectId,
-        authorId,
-        status: '0'
+        authorId
       })
       await this.$router.push({ name: 'project-kanban', params: { projectId } })
     }

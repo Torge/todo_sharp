@@ -1,9 +1,11 @@
 <template>
-  <b-card
-    :title="ticket.name"
-    draggable
-    @dragstart="$event.dataTransfer.setData('id', ticket._id)"
-  />
+  <b-card draggable
+          @dragstart="$event.dataTransfer.setData('id', ticket._id)">
+    <h3>{{ ticket.name }}
+      <router-link :to="{name: 'ticket-detail', params: {ticketId: ticket._id}}">🔍</router-link>
+    </h3>
+    {{ ticket.desc }}
+  </b-card>
 </template>
 
 <script>
@@ -19,5 +21,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
