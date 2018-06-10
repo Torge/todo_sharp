@@ -8,16 +8,17 @@
                       placeholder="Ticketname"
         />
         <b-form-textarea id="desc"
-                      v-model="ticket.desc"
-                      required
-                      rows="4"
-                      placeholder="Description"
+                         v-model="ticket.desc"
+                         required
+                         rows="4"
+                         placeholder="Description"
         />
         <b-form-select
-                id="status"
-                v-model="ticket.status"
-                required
-                :options="options"/>
+          id="status"
+          v-model="ticket.status"
+          :options="options"
+          required
+        />
         <b-button type="submit" variant="primary">Create</b-button>
       </b-form-group>
     </b-form>
@@ -35,9 +36,9 @@ export default {
         status: ''
       },
       options: [
-        { text: 'Todo', value: 'todo', },
+        { text: 'Todo', value: 'todo' },
         { text: 'Doing', value: 'doing' },
-        { text: 'Done', value: 'done'}
+        { text: 'Done', value: 'done' }
       ]
     }
   },
