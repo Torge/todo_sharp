@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card title="Project Insights"/>>
+    <b-card title="Project Insights"/>
     <b-card>
       <div v-for="bar in bars" :key="bar.label" class="row mb-1">
         <div class="col-sm-2">{{ bar.label }}</div>
