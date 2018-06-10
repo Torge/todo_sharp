@@ -10,7 +10,7 @@ export default async function (to, from, next) {
   } else {
     const jwt = localStorage['todo_sharp_jwt']
     const userId = localStorage['todo_sharp_userId']
-    if (jwt) {
+    if (jwt && userId) {
       try {
         await store.dispatch('auth/reAuthenticate', {
           jwt,
