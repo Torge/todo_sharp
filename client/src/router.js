@@ -26,6 +26,7 @@ Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
+  base: process.env.VUE_APP_V === 1 ? '/v1/' : '/v2/',
   routes: [{
     path: '/',
     component: LayoutDefault,
