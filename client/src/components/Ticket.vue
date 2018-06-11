@@ -9,6 +9,9 @@
 </template>
 
 <script>
+/**
+ * Die Ticket Komponente stellt die Informationen des Tickets dar
+*/
 export default {
   name: 'Ticket',
   props: {

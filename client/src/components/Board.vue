@@ -13,6 +13,11 @@
 </template>
 
 <script>
+/**
+ * Die Board Komponente die die Lanes zu einem Board vereinen und die
+ * einzelnen Tickets den Lanes zuordnet
+ * Außerdem ist hier die drag and drop funktionalität realisiert
+*/
 import Lane from '@/components/Lane'
 export default {
   name: 'Board',

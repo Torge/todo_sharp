@@ -12,6 +12,9 @@
 </template>
 
 <script>
+/**
+ * Die Lane KOmponente hält die Tickets und gibt das drop event an das Board weiter
+*/
 import Ticket from '@/components/Ticket'
 export default {
   name: 'Lane',
