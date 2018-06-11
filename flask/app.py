@@ -6,7 +6,7 @@ from bson import ObjectId
 from datetime import datetime
 from oauth2client.client import OAuth2WebServerFlow
 import httplib2
-
+# Konfiguration des OAuthServerFlows
 flow = OAuth2WebServerFlow(client_id='1027715718368-niq4gvn9hie8rr079ouv6p0osumdm4vb.apps.googleusercontent.com',
                            client_secret='clF2yjEX6sPxrJB3VNDiLrb2',
                            scope='email',
@@ -14,9 +14,11 @@ flow = OAuth2WebServerFlow(client_id='1027715718368-niq4gvn9hie8rr079ouv6p0osumd
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = "strapi"
+# Erlauben von Cross-Origin Resource Sharing
 CORS(app)
 mongo = PyMongo(app, config_prefix='MONGO')
 
+# JSONEncoder zum encoden der Mongo Einträge in JSON
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
@@ -24,7 +26,17 @@ class JSONEncoder(json.JSONEncoder):
         elif isinstance(o, datetime):
           return o.isoformat()
         return json.JSONEncoder.default(self, o)
+# Die Routen sind für jeden Service sehr ähnlich und implementieren jeweils eine
+# Schnittstelle für:
+# - Create
+# - Find
+# - Get
+# - Patch
+# - Delete
+# Die Routen liefern jeweils die Daten aus der MongoDB in JSON Format an
+# den Client aus
 
+## Projekte
 
 @app.route('/project', methods=['POST'])
 def project_create():
@@ -58,6 +70,8 @@ def project_delete(id):
   mongo.db.project.delete_one({'_id': ObjectId(id)})
   return "ok"
 
+## Tickets
+
 @app.route('/ticket', methods=['POST'])
 def ticket_create():
   data = request.get_json()
@@ -90,6 +104,7 @@ def ticket_delete(id):
   mongo.db.ticket.delete_one({'_id': ObjectId(id)})
   return "ok"
 
+## Nutzer
 
 @app.route('/user', methods=['POST'])
 def user_create():
@@ -123,6 +138,10 @@ def user_delete(id):
   mongo.db['users-permissions_user'].delete_one({'_id': ObjectId(id)})
   return "ok"
 
+# Die Authentifizierung ist an den Ablauf von strapi orierntiert und nutzt
+# die Funktionen von der googleOauth Libary
+# Beim einloggen wird der nutzer entweder gepudated oder erstellt durch upsert
+
 @app.route('/connect/google/')
 def connetGoogle():
   return redirect(flow.step1_get_authorize_url())
@@ -139,7 +158,6 @@ def auth():
     'username': googleUser['name'],
     'provider': 'google'
   }
-  print(googleUser)
   mongo.db['users-permissions_user'].update_one({'email': user['email']}, {'$set': user}, upsert = True)
   user = mongo.db['users-permissions_user'].find_one({'email': user['email']})
   jwt = credentials.get_access_token().access_token
