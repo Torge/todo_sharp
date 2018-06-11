@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:strapi": "VUE_APP_V=1 VUE_APP_API_URL='/api' npm run build",
-    "build:flask": "VUE_APP_V=2 VUE_APP_API_URL='/api' npm run build",
+    "build:strapi": "VUE_APP_V=1 VUE_APP_API_URL=\"/api\" npm run build",
+    "build:flask": "VUE_APP_V=2 VUE_APP_API_URL=\"/api\" npm run build",
     "test": "vue-cli-service test",
     "e2e": "vue-cli-service e2e",
     "lint": "vue-cli-service lint",
