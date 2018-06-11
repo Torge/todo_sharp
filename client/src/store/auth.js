@@ -1,5 +1,10 @@
 import api from '@/api.js'
 
+/**
+ * In dem Auth Modul wird alles geregelt, was mit dem State der Authentifizierung
+ * und mit der Kommunikation (heißt login, logout etc.) zu tun hat
+*/
+
 export default {
   namespaced: true,
   state: {

@@ -1,4 +1,9 @@
 import store from './store'
+/**
+ * Der Authguard wird im router vor jeder route aufgerufen
+ * und checkt ob der Nutzer authentifiziert ist. Wenn er das
+ * nicht ist, wird dieser auf die Login Seite geleitet.
+*/
 export default async function (to, from, next) {
   const publicPages = ['login']
   if (publicPages.includes(to.name)) {

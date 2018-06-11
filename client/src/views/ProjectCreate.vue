@@ -18,7 +18,10 @@
 </template>
 
 <script>
-
+/**
+ * Die Projekt Erstellen Seite nimmt die Nutzerdaten entgegen
+ * und schickt diese über den Store an den Server
+*/
 export default {
   name: 'ProjectCreate',
   data () {

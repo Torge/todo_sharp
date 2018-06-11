@@ -1,9 +1,14 @@
+/**
+ * Die router.js definiert die Routen zu den Komponenten
+ * Es werden auch Api Aktionen ausgeführt bevor die Route
+ * betreten wird. z.B. die Projekte werden angefordert bevor
+ * man auf die Projekt Liste Seite kommt
+*/
+
 import LayoutDefault from '@/layout/LayoutDefault'
 import LayoutLogin from '@/layout/LayoutLogin'
 import Login from '@/views/Login'
 import ProjectCreate from '@/views/ProjectCreate'
-import ProjectDetail from '@/views/ProjectDetail'
-import ProjectEdit from '@/views/ProjectEdit'
 import ProjectInsights from '@/views/ProjectInsights'
 import ProjectKanban from '@/views/ProjectKanban'
 import ProjectList from '@/views/ProjectList'
@@ -61,28 +66,6 @@ const router = new Router({
         await store.dispatch('ticket/find', {
           projectId: to.params.projectId
         })
-        next()
-      }
-    },
-    {
-      path: '/project/:projectId/detail',
-      name: 'project-detail',
-      component: ProjectDetail,
-      async beforeEnter (to, from, next) {
-        await store.dispatch('project/get', to.params.projectId)
-        await store.dispatch('user/get', to.params.userId)
-        await store.dispatch('ticket/find', {
-          projectId: to.params.projectId
-        })
-        next()
-      }
-    },
-    {
-      path: '/project/:projectId/edit',
-      name: 'project-edit',
-      component: ProjectEdit,
-      async beforeEnter (to, from, next) {
-        await store.dispatch('project/get', to.params.projectId)
         next()
       }
     },

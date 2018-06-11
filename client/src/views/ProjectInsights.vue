@@ -20,6 +20,11 @@
 </template>
 
 <script>
+/**
+ * Die Projekt Insights geben einen Überblick über den Status des
+ * Projektes mithilfe von Progressbars die zeigen wieviele Tickets
+ * sich in welchem Status befinden
+*/
 export default {
   computed: {
     project () {

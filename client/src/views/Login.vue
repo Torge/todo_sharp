@@ -12,6 +12,14 @@
 </template>
 
 <script>
+/**
+ * Die Login Seite regelt die authentifizierung via google oauth
+ * Der Login Button leitet den Nutzer auf den Server weiter, wo
+ * dieser zu google weitergeleitet und letzteinlich mit einem
+ * access token wieder zu der login Seite geleitet wird
+ * Der Access Token wird dann benutzt um den Nutzer zu
+ * authentifizieren
+*/
 export default {
   name: 'Login',
   data () {

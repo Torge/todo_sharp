@@ -6,6 +6,11 @@
 </template>
 
 <script>
+/**
+ * Die Ticket Create Seite bindet das TicketForm ein
+ * und schickt die Daten bei abschluss über den Store
+ * an den Server um das Ticket zu erstellen
+*/
 import TicketForm from '@/components/TicketForm'
 export default {
   name: 'TicketCreate',

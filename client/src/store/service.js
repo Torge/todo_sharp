@@ -4,6 +4,14 @@ import _merge from 'lodash.merge'
 import api from '@/api.js'
 import socket from '@/socket.js'
 
+/**
+ * Dies ist die Service Plugin Factory, hier wurde einmal definiert wie
+ * der client mit einen bestimmten Service (z.B. Users) interagieren kann
+ * und wie diese in dem State abzuspeichern sind
+ * Dadurch können im store die Services sehr einfach eingebunden werden
+ * und die Handhabung ist immer gleich
+*/
+
 export default function createServiceModule (servicePath) {
   return function setupStore (store) {
     store.registerModule(servicePath, {

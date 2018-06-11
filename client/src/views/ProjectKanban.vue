@@ -26,7 +26,10 @@
 
 <script>
 import Board from '@/components/Board'
-
+/**
+ * Die Projekt Kanban Seite zeigt die Informationen zu dem Projekt an
+ * und bindet das Board zu dem Projekt ein
+*/
 export default {
   name: 'KanbanBoard',
   components: {

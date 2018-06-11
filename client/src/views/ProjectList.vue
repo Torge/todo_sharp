@@ -17,6 +17,11 @@
 </template>
 
 <script>
+/**
+ * Die Projekt List Seite listet dem Nutzer alle aktuellen Projekte
+ * auf und mit Klick auf ein Projekt navigiert man zu dessen Kanban
+ * Board
+*/
 import moment from 'moment'
 moment.locale('de')
 export default {

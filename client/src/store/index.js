@@ -6,6 +6,11 @@ import service from './service'
 
 import socket from '@/socket.js'
 
+/**
+ * In dem Store index wird der Store von Vuex eingereichtet und die Services als plugin eingebunden
+ * Es werden hier auch auf die socket messages reagiert
+*/
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({

@@ -16,6 +16,10 @@
 </template>
 
 <script>
+/**
+ * Die User List Seite zeigt die Nuter und hierrüber kann man
+ * zu der User Detail Seite navigieren
+*/
 export default {
   name: 'UserList',
   computed: {

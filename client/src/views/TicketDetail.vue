@@ -49,6 +49,13 @@
 </template>
 
 <script>
+/**
+ * Die Ticket Detail Seite zeigt die Informationen zu den Ticket
+ * und hier kann der Admin des Projekts oder der Author des Tickets
+ * das Ticket löschen
+ * Weitere Aktionen wie das Ticket bearbeiten oder sich selbst zu dem
+ * Ticket assignen ist über die Buttons möglich
+*/
 import moment from 'moment'
 export default {
   name: 'TicketDetail',

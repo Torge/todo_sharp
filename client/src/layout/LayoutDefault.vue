@@ -36,6 +36,9 @@
 </template>
 
 <script>
+/**
+ * Das Default Layout beinhaltet die navbar und den ausgang für den router
+*/
 export default {
   name: 'LayoutDefault',
   computed: {

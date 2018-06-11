@@ -33,6 +33,10 @@
 </template>
 
 <script>
+/**
+ * Die TicketForm Komponent wird sowohl für das Erstellen als
+ * auch für das Bearbeiten des Tickets wiederverwendet
+*/
 export default {
   name: 'TicketForm',
   props: {

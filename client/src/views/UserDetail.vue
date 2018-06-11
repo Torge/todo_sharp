@@ -10,6 +10,10 @@
 </template>
 
 <script>
+/**
+ * Die User Detail Seite zeigt die Informationen des
+ * ausgewählten Nutzers
+*/
 export default {
   name: 'UserDetail',
   computed: {

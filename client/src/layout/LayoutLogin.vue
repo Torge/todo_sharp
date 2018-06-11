@@ -8,6 +8,9 @@
   </b-container>
 </template>
 <script>
+/**
+ * Das Login Layout beinhaltet ausgang für den router für die Login Seite
+*/
 export default {
   name: 'LayoutLogin'
 }
