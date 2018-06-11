@@ -20,7 +20,7 @@
  * Der Access Token wird dann benutzt um den Nutzer zu
  * authentifizieren
 */
-console.log(process.env.VUE_APP_API_URL)
+console.log(process.env)
 export default {
   name: 'Login',
   data () {
